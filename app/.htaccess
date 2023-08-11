@@ -1,3 +1,15 @@
-php_value memory_limit 128M
-php_value upload_max_filesize 64M
-php_value post_max_size 64M
+RewriteEngine On
+
+RewriteCond %{THE_REQUEST} public/([^\s?]*) [NC]
+RewriteRule ^ %1 [L,NE,R=302]
+
+RewriteRule ^((?!public/).*)$ public/$1 [L,NC]
+
+RewriteCond %{THE_REQUEST} !^[A-Z]{3,}\s/+.+?\.(png|jpe?g|bmp|gif|swf|css|js)[\s?] [NC]
+RewriteRule ^.*$ public/index.php [L,QSA]
+
+php_value upload_max_filesize 128M
+php_value post_max_size 128M
+php_value max_execution_time 300
+php_value max_input_time 300
+php_value memory_limit 256M
